@@ -60,12 +60,17 @@ li {
 
 .navbar-search .dot {
     position: absolute;
-    min-width: 10px;
+    min-width: 19px;
     min-height: 10px;
     background-color: tomato;
-    border-radius: 5px;
+    border-radius: 100%;
+    color: white;
     top: -8px;
-    right: -8px;
+    right: -10px;
+}
+
+.navbar-search .dot p {
+    text-align: center;
 }
 
 
