@@ -1,28 +1,70 @@
 
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets'
+import { StoreContext } from '../../context/StoreContext';
+import axios from 'axios'
 
 
 export const LoginPopup = ({ setShowLogin }) => {
 
 
-
     const [currentState, setCurrentState] = useState("Iniciar Sesion")
+    const { url, setToken } = useContext(StoreContext)
+
+    const [data, setData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    })
+    
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setData((data) => ({
+           ...data,
+            [name]: value,
+        }))
+    }
+
+
+    const handleLogin = async(e) => {
+        e.preventDefault()
+        let newUrl = url
+
+        if (currentState === 'Iniciar Sesion') {
+            newUrl += "/api/user/login"
+        }
+
+        else {
+            newUrl += "/api/user/register"
+        }
+
+        const response = await axios.post(newUrl, data)
+
+        if (response.data.success) {
+            setToken(response.data.token)
+            localStorage.setItem('token', response.data.token)
+            setShowLogin(false)
+        } else {
+            alert(response.data.message)
+        }
+    }
 
 
   return (
     <div className='login-popup'>
-        <form className='login-popup-container'>
+        <form onSubmit={handleLogin} className='login-popup-container'>
             <div className='login-popup-title'>
             <h2>{ currentState }</h2>
             <img onClick={()=> setShowLogin(false)} src={ assets.cross_icon } />
             </div>
 
             <div className='login-popup-inputs'>
-                {currentState === "Iniciar Sesion" ? <></> : <input type='text' placeholder='Tu nombre' />}
-            <input type='text' placeholder='Username' />
-            <input type='password' placeholder='Password' />
+                {currentState === "Iniciar Sesion" ? <></> : <input type='text' placeholder='Tu nombre' name='name'  onChange={handleChange} value={data.name} />}
+            <input onChange={handleChange} value={data.email} type='text' placeholder='email' name='email' />
+            <input  onChange={handleChange} value={data.password} type='password' placeholder='Password' name='password' />
             </div>
            
             
