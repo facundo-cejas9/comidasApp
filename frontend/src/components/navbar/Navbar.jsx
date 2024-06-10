@@ -73,7 +73,11 @@ export const Navbar = ({ setShowLogin }) => {
             <img src={assets.basket_icon} alt="basket_logo" />
           </Link>
           <div className={getTotalCartAmount(cartItems) === 0 ? "" : "dot"}>
-            <p>{totalItems}</p>
+            {
+              getTotalCartAmount(cartItems) >= 1 && (
+                <p>{ totalItems }</p>
+              )
+            }
           </div>
           </div>
 

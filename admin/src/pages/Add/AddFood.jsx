@@ -16,7 +16,7 @@ export const AddFood = ({ url }) => {
   const [data, setData] = useState({
     name: "",
     description: "",
-    category: "Hamburguesa",
+    category: "Hamburguesas",
     price: "",
   });
 
@@ -47,7 +47,7 @@ export const AddFood = ({ url }) => {
       setData({
         name: "",
         description: "",
-        category: "Hamburguesa",
+        category: "Hamburguesas",
         price: "",
       });
       setImage(false);
@@ -109,8 +109,8 @@ export const AddFood = ({ url }) => {
               id="category"
               required
             >
-              <option value="Hamburguesa">Hamburguesa</option>
-              <option value="Pizza">Pizza</option>
+              <option value="Hamburguesas">Hamburguesas</option>
+              <option value="Pizzas">Pizzas</option>
               <option value="Tortas">Tortas</option>
               <option value="Empanadas">Empanadas</option>
               <option value="Sandwich">Sandwich</option>
