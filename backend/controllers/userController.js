@@ -13,7 +13,7 @@ const createToken = (id) => {
 
 //loginuser
 const loginUser = async(req, res) => {
-    const {email, password} = req.body
+    const {email, password, name} = req.body
     try {
         const user = await userModel.findOne({email})
 
@@ -28,8 +28,9 @@ const loginUser = async(req, res) => {
         }
 
         const token = createToken(user._id)
+        const name = user.name
 
-        res.json({success: true, token})
+        res.json({success: true, token, name })
 
 
 
@@ -79,4 +80,15 @@ const registerUser = async(req, res) => {
 
 }
 
-export { loginUser, registerUser }
+
+const dataUser = async (req,res) => {
+    const userId = req.body.userId;
+    try {
+        const userName = await userModel.findById(userId).select('name');
+        res.json({success: true, userName: userName})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export { loginUser, registerUser, dataUser }
