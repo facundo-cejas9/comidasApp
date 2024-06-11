@@ -11,6 +11,7 @@ export const LoginPopup = ({ setShowLogin }) => {
 
     const [currentState, setCurrentState] = useState("Iniciar Sesion")
     const { url, setToken } = useContext(StoreContext)
+    const [userName, setUsername] = useState(null)
 
     const [data, setData] = useState({
         name: '',

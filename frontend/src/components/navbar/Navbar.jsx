@@ -2,30 +2,45 @@ import React, { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { StoreContext } from "../../context/StoreContext";
+import { useEffect } from "react";
 
 export const Navbar = ({ setShowLogin }) => {
-
-
   const [menu, setMenu] = useState("Inicio");
-  const { getTotalCartAmount, cartItems, token, setToken } = useContext(StoreContext);
+  const [name, setName] = useState(null);
+  const { getTotalCartAmount, cartItems, token, setToken, url } =
+    useContext(StoreContext);
+
+  const getUserName = async () => {
+    if (token) {
+      const response = await axios.get(`${url}/api/user/me`, {
+        headers: { token },
+      });
+      setName(response.data.userName.name);
+    }
+  };
+
+  useEffect(() => {
+    getUserName();
+  }, [token]);
 
   const totalItems = Object.values(cartItems).reduce(
     (total, quantity) => total + quantity,
     null
   );
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.removeItem('token')
-    setToken("")
-    navigate('/')
-  }
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
+  };
 
   const handleOrder = () => {
-    navigate('/myorders')
-  }
+    navigate("/myorders");
+  };
 
   return (
     <div className="navbar">
@@ -77,34 +92,33 @@ export const Navbar = ({ setShowLogin }) => {
             <img src={assets.basket_icon} alt="basket_logo" />
           </Link>
           <div className={getTotalCartAmount(cartItems) === 0 ? "" : "dot"}>
-            {
-              getTotalCartAmount(cartItems) >= 1 && (
-                <p>{ totalItems }</p>
-              )
-            }
+            {getTotalCartAmount(cartItems) >= 1 && <p>{totalItems}</p>}
           </div>
-          </div>
+        </div>
 
-         
-          {!token ? (
-            <button onClick={() => setShowLogin(true)}>Iniciar Sesión</button>
-          ) : (
-            <div className="navbar-profile">
+        {!token ? (
+          <button onClick={() => setShowLogin(true)}>Iniciar Sesión</button>
+        ) : (
+          <div className="navbar-profile">
+            <div className="profile">
               <img src={assets.profile_icon} alt="Profile icon" />
-              <ul className="nav-profile-dropdown">
-                <li onClick={handleOrder}>
-                  <img src={assets.bag_icon} alt="bag icon" />
-                  <p>Ordenes</p>
-                </li>
-                <hr />
-                <li onClick={logout}>
-                  <img src={assets.logout_icon} alt="bag icon" />
-                  <p>Logout</p>
-                </li>
-              </ul>
+              <p>Hola, {name}! </p>
             </div>
-          )}
-        
+
+            <ul className="nav-profile-dropdown">
+              <li onClick={handleOrder}>
+                <img src={assets.bag_icon} alt="bag icon" />
+                <p>Ordenes</p>
+              </li>
+              <hr />
+              <li onClick={logout}>
+                <img src={assets.logout_icon} alt="bag icon" />
+                <p>Logout</p>
+              </li>
+            </ul>
+          </div>
+        )}
+
         {/* <button onClick={() => setShowLogin(true)}>Iniciar Sesión</button> */}
       </div>
     </div>
