@@ -9,13 +9,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const placeOrder = async(req, res) => {
 
-    const fronten_url = 'http://localhost:5173'
+    const fronten_url = 'http://localhost:5174'
     try {
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
             amount: req.body.amount,
-            address: req.body.address
+            address: req.body.address,
+            status: 'Procesando',
+            date: new Date(),
+            payment: false
         })
         await newOrder.save()
         await userModel.findByIdAndUpdate(req.body.userId, {cartData: {}})
@@ -46,8 +49,8 @@ const placeOrder = async(req, res) => {
         const sesion = await stripe.checkout.sessions.create({
             line_items: line_items,
             mode: 'payment',
-            success_url: `${fronten_url}/verify?success=true&orderId${newOrder._id}`,
-            cancel_url: `${fronten_url}/verify?success=false&orderId${newOrder._id}`,
+            success_url: `${fronten_url}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${fronten_url}/verify?success=false&orderId=${newOrder._id}`,
         })
 
         res.json({
@@ -68,12 +71,9 @@ const verifyOrder = async(req,res) => {
     const {orderId, success} = req.body
 
     try {
-        if (success === "true") {
-            await orderModel.findByIdAndUpdateOrder(orderId, {payment: true})
-            res.json({
-                success: true,
-                message: 'Orden confirmada'
-            })
+        if (success == "true") {
+            await orderModel.findByIdAndUpdate(orderId, {payment:true})
+            res.json({success: true,message: 'Orden confirmada'})
         } else {
             await orderModel.findByIdAndDelete(orderId)
             res.json({
@@ -90,5 +90,41 @@ const verifyOrder = async(req,res) => {
     }
 }
 
+//Ordenes del usuario en el front
 
-export { placeOrder, verifyOrder}
+const userOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({userId: req.body.userId})
+        res.json({success: true, data: orders})
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message });
+    }
+}
+
+//Mostrar ordenes en el admin
+
+const listOrders = async (req, res) => {
+    try {
+        const listOrder = await orderModel.find({})
+        res.json({success: true, data: listOrder})
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message });
+    }
+}
+
+//update order status
+
+const updateOrderStatus = async(req,res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status})
+        res.json({success: true, message: 'Orden actualizada'})
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message });
+    }
+}
+
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateOrderStatus}
