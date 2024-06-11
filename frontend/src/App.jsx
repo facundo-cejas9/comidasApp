@@ -6,6 +6,8 @@ import PlacerOrder from "./pages/PlaceOrder/PlacerOrder";
 import { Footer } from "./components/Footer/Footer";
 import { useState } from "react";
 import { LoginPopup } from "./components/LoginPopup/LoginPopup";
+import VerifyOrder from "./pages/VerfiyOrder/VerifyOrder";
+import MyOrders from "./pages/myOrders/MyOrders";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlacerOrder />} />
+          <Route path="/verify" element={ <VerifyOrder />  } />
+          <Route path='/myorders' element={<MyOrders />} />
         </Routes>
       </div>
       <Footer />

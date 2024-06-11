@@ -23,6 +23,10 @@ export const Navbar = ({ setShowLogin }) => {
     navigate('/')
   }
 
+  const handleOrder = () => {
+    navigate('/myorders')
+  }
+
   return (
     <div className="navbar">
       <Link to="/">
@@ -88,7 +92,7 @@ export const Navbar = ({ setShowLogin }) => {
             <div className="navbar-profile">
               <img src={assets.profile_icon} alt="Profile icon" />
               <ul className="nav-profile-dropdown">
-                <li>
+                <li onClick={handleOrder}>
                   <img src={assets.bag_icon} alt="bag icon" />
                   <p>Ordenes</p>
                 </li>

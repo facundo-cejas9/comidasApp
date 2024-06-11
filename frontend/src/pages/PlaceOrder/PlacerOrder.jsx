@@ -48,6 +48,14 @@ const PlacerOrder = () => {
     }
   }
 
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    } else if (getTotalCartAmount(cartItems) === 0) {
+      navigate('/')
+    }
+  }, [token]);
+
   
 
   return (
