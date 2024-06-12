@@ -13,14 +13,26 @@ import { ToastContainer, toast } from 'react-toastify';
 function App() {
 
   const [showLogin, setShowLogin] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  
+  
   return (
     <>
      {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
       <div className="app">
         <ToastContainer />
-        <Navbar setShowLogin={ setShowLogin } />
+        <Navbar setShowLogin={setShowLogin} onSearch={handleSearch} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          
+          <Route
+            path="/"
+            element={<HomePage searchTerm={searchTerm} />}
+          />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlacerOrder />} />
           <Route path="/verify" element={ <VerifyOrder />  } />

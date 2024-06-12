@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { assets } from "../../assets/assets";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,11 +6,31 @@ import axios from "axios";
 import { StoreContext } from "../../context/StoreContext";
 import { useEffect } from "react";
 
-export const Navbar = ({ setShowLogin }) => {
+export const Navbar = ({ setShowLogin, onSearch }) => {
   const [menu, setMenu] = useState("Inicio");
   const [name, setName] = useState(null);
-  const { getTotalCartAmount, cartItems, token, setToken, url } =
-    useContext(StoreContext);
+  const [search, setSearch] = useState("");
+  const { getTotalCartAmount, cartItems, token, setToken, url } = useContext(StoreContext);
+
+  const navbarRef = useRef()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        navbarRef.current.classList.add('scrolled');
+        console.log(window.scrollY);
+      } else {
+        navbarRef.current.classList.remove('scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const getUserName = async () => {
     if (token) {
@@ -43,11 +63,27 @@ export const Navbar = ({ setShowLogin }) => {
   };
 
   return (
-    <div className="navbar">
+    <div ref={navbarRef} className="navbar">
       <Link to="/">
         <img src={assets.logo} alt="logo-image" className="logo" />
+        <img className="mobile-logo" src={assets.casa} alt="logo-home" />
       </Link>
-      <ul className="navbar-menu">
+      
+      <div className="searcher">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar..."
+        />
+        <img
+          src={assets.search_icon}
+          alt="search-icon"
+          onClick={() => onSearch(search)}
+          className="search-icon"
+        />
+      </div>
+      {/* <ul className="navbar-menu">
         <Link
           to="/"
           onClick={() => {
@@ -84,9 +120,8 @@ export const Navbar = ({ setShowLogin }) => {
         >
           Contáctanos
         </a>
-      </ul>
+      </ul> */}
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="user-image" />
         <div className="navbar-search">
           <Link to="/cart">
             <img src={assets.basket_icon} alt="basket_logo" />
@@ -102,7 +137,7 @@ export const Navbar = ({ setShowLogin }) => {
           <div className="navbar-profile">
             <div className="profile">
               <img src={assets.profile_icon} alt="Profile icon" />
-              <p>Hola, {name}! </p>
+              <p>Hola, <span>{name}!</span> </p>
             </div>
 
             <ul className="nav-profile-dropdown">
@@ -118,8 +153,6 @@ export const Navbar = ({ setShowLogin }) => {
             </ul>
           </div>
         )}
-
-        {/* <button onClick={() => setShowLogin(true)}>Iniciar Sesión</button> */}
       </div>
     </div>
   );

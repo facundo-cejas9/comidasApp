@@ -5,13 +5,13 @@
     width: 100%;
     z-index: 1;
     background-color: #00000090;
-    
+    overflow: hidden;
 }
 
 
 .login-popup-container {
     place-self: center;
-    width: max(20vw, 330px);
+    width: max(20vw, 400px);
     color: #808080;
     background-color: white;
     display: flex;
@@ -21,6 +21,8 @@
     border-radius: 8px;
     font-size: 14px;
     animation: fadeIn 0.5s;
+    margin-bottom: 150px;
+    
 
 }
 
