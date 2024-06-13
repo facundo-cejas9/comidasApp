@@ -4,6 +4,7 @@
     border: 1px solid #a9a9a9;
     border-top: 0;
     font-size: max(1vw, 10px);
+    
 }
 
 
@@ -22,11 +23,12 @@
     padding: 10px 10px;
     border: 1px solid #eaeaea;
     cursor: pointer;
+    
 }
 
 .sidebar-option.active {
-    background-color: #fff0ed;
-    border-color: tomato;
+    background-color: #ffd3ca;
+    transition: background-color 0.3s ease;
 }
 
 

@@ -2,10 +2,16 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 4%;
+    align-items: center;
 }
 
-.logo {
-    width: max(10%, 80px);
+.title-admin {
+    margin-left: 50px;
+    justify-content: center;
+}
+
+.title-admin span {
+    color: tomato;
 }
 
 
