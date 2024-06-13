@@ -1,24 +1,23 @@
 import React, { useContext, useState, useRef } from "react";
 import { assets } from "../../assets/assets";
 import "./Navbar.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { StoreContext } from "../../context/StoreContext";
 import { useEffect } from "react";
 
 export const Navbar = ({ setShowLogin, onSearch }) => {
   const [menu, setMenu] = useState("Inicio");
-  const [name, setName] = useState(null);
+  const [name, setName] = useState('');
   const [search, setSearch] = useState("");
   const { getTotalCartAmount, cartItems, token, setToken, url } = useContext(StoreContext);
-
-  const navbarRef = useRef()
+  const navbarRef = useRef();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 80) {
         navbarRef.current.classList.add('scrolled');
-        console.log(window.scrollY);
       } else {
         navbarRef.current.classList.remove('scrolled');
       }
@@ -26,7 +25,6 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Cleanup function to remove the event listener when the component unmounts
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -34,10 +32,14 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
 
   const getUserName = async () => {
     if (token) {
-      const response = await axios.get(`${url}/api/user/me`, {
-        headers: { token },
-      });
-      setName(response.data.userName.name);
+      try {
+        const response = await axios.get(`${url}/api/user/me`, {
+          headers: { token },
+        });
+        setName(response.data.userName.name);
+      } catch (error) {
+        throw new Error;
+      }
     }
   };
 
@@ -47,7 +49,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
 
   const totalItems = Object.values(cartItems).reduce(
     (total, quantity) => total + quantity,
-    null
+    0
   );
 
   const navigate = useNavigate();
@@ -63,64 +65,29 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
   };
 
   return (
-    <div ref={navbarRef} className="navbar">
+    <div ref={navbarRef} className={`navbar ${location.pathname !== "/" ? "navbar-space-between" : ""}`}>
       <Link to="/">
         <img src={assets.logo} alt="logo-image" className="logo" />
         <img className="mobile-logo" src={assets.casa} alt="logo-home" />
       </Link>
       
-      <div className="searcher">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Buscar..."
-        />
-        <img
-          src={assets.search_icon}
-          alt="search-icon"
-          onClick={() => onSearch(search)}
-          className="search-icon"
-        />
-      </div>
-      {/* <ul className="navbar-menu">
-        <Link
-          to="/"
-          onClick={() => {
-            setMenu("Inicio");
-          }}
-          className={menu === "Inicio" ? "active" : ""}
-        >
-          Inicio
-        </Link>
-        <a
-          href="#explore-menu"
-          onClick={() => {
-            setMenu("Menu");
-          }}
-          className={menu === "Menu" ? "active" : ""}
-        >
-          Menu
-        </a>
-        <a
-          href="#app-download"
-          onClick={() => {
-            setMenu("Mobile App");
-          }}
-          className={menu === "Mobile App" ? "active" : ""}
-        >
-          App
-        </a>
-        <a
-          href="#footer"
-          onClick={() => {
-            setMenu("Contactanos");
-          }}
-          className={menu === "Contactanos" ? "active" : ""}
-        >
-          Contáctanos
-        </a>
-      </ul> */}
+      {location.pathname === "/" && (
+        <div className="searcher">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar..."
+          />
+          <img
+            src={assets.search_icon}
+            alt="search-icon"
+            onClick={() => onSearch(search)}
+            className="search-icon"
+          />
+        </div>
+      )}
+      
       <div className="navbar-right">
         <div className="navbar-search">
           <Link to="/cart">

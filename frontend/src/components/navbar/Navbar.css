@@ -6,11 +6,21 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Cambiado de 80% a 100% para ocupar todo el ancho */
-    height: 5rem; /* Asegúrate de que este tamaño sea lo que necesitas */
+    width: 100%; 
+    height: 5rem; 
     gap: 5px;
-    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    z-index: 1000; /*  encima de otros elementos */
     transition: background-color 0.3s ease;
+}
+
+.navbar-space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    
+   
 }
 
 .navbar-menu {
@@ -20,6 +30,7 @@
     align-items: center;
     gap: 20px;
     display: none;
+
 }
 
 ul {
@@ -185,6 +196,8 @@ li {
         width: 140px;
     }
 
+    
+
     .navbar-menu {
         gap: 20px;
         font-size: 17px;
@@ -211,6 +224,16 @@ li {
     .navbar-menu {
         gap: 15px;
         font-size: 15px;
+    }
+
+    .navbar-space-between {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+        
+       
     }
 
     .navbar-right {
@@ -261,6 +284,9 @@ li {
        
         
     }
+
+   
+    
 
     .logo {
         display: none;
