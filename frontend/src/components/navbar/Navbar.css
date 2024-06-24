@@ -50,29 +50,23 @@ li {
     gap: 30px;
 }
 
-.navbar button {
-    background: tomato;
-    font-size: 16px;
-    color: #ffffff;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: ease-in 0.2s;
-    font-family: sans-serif;
-}
+
+
 
 
 
 .active {
     padding-bottom: 1px;
-    border-bottom: 2px solid tomato;
+    border-bottom: 2px solid #d90429;
 }
 
 .navbar-search {
     position: relative;
 }
 
+.navbar-search img {
+    width: 40px;
+}
 .navbar.scrolled {
     background: rgb(238, 236, 236);
     box-shadow: 0px 3px 5px -3px rgba(0,0,0,0.9);
@@ -84,7 +78,7 @@ li {
     position: absolute;
     min-width: 19px;
     min-height: 10px;
-    background-color: red;
+    background-color: #d90429;
     border-radius: 100%;
     color: white;
     top: -8px;
@@ -100,8 +94,6 @@ li {
     position: relative;
     width: 300px;
     
-    
-    
 
 }
 
@@ -115,7 +107,7 @@ li {
 
 .searcher img {
     width: 40px;
-    background: tomato;
+    background: #d90429;
     padding: 5px;
     border-radius: 4px;
     color: white;
@@ -133,6 +125,10 @@ li {
     gap: 10px;
 }
 
+.profile img {
+    width: 40px;
+}
+
 .profile p {
     font-size: 15px;
     font-family: sans-serif;
@@ -140,6 +136,7 @@ li {
 
 .logo {
     cursor: pointer;
+    
 }
 
 .navbar-profile {
@@ -157,11 +154,12 @@ li {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #fff2ef;
+    background-color: #fcfbfb;
     padding: 12px 25px;
     border-radius: 4px;
-    border: 1px solid #ff6347;
+    border: 1px solid #5f5f5f63;
     list-style: none;
+    width: 200px;
 }
 
 .nav-profile-dropdown li {
@@ -173,11 +171,28 @@ li {
 }
 
 .nav-profile-dropdown img {
-    width: 20px;
+    width: 25px;
 }
 
 .mobile-logo {
     display: none;
+}
+
+.profile-dropdown p {
+    font-size: 15px;
+    font-family: sans-serif;
+    text-align: center;
+    display: none;
+}
+
+.hr-dropdown {
+    display: none;
+}
+
+.profile-dropdown span {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #d90429;
 }
 
 .profile p {
@@ -186,14 +201,34 @@ li {
 }
 
 .profile span {
-    color: rgb(230, 103, 81);
+    color: #d90429;
     text-transform: capitalize;
     font-weight: 600;
+}
+
+.profile img {
+    width: 40px;
+}
+
+.login-dropdown {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.span-login {
+    color: black;
 }
 
 @media (max-width: 1050px) {
     .navbar .logo {
         width: 140px;
+    }
+
+    .nav-profile-dropdown img {
+        width: 15px;
     }
 
     
@@ -206,13 +241,31 @@ li {
     .navbar-right {
         gap: 30px;
     }
-    .navbar-right img {
-        width: 22px;
-    }
+    
 
     .navbar-right button {
         padding: 8px 25px;
 
+    }
+
+    .profile-name {
+        display: none;
+    }
+
+    .navbar-right img {
+        width: 35px;
+    }
+
+    .profile-dropdown p {
+        display: block;
+    }
+    
+    .hr-dropdown {
+        display: block;
+    }
+
+    .navbar-search img {
+        width: 35px;
     }
 }
 
@@ -237,16 +290,27 @@ li {
     }
 
     .navbar-right {
-        gap: 12px;
+        gap: 20px;
     }
     .navbar-right img {
-        width: 18px;
+        width: 25px;
     }
 
     .navbar-right button {
         padding: 5px 12px;
         font-size: 12px;
     }
+
+    .profile img {
+        width: 40px;
+    }
+    .navbar-search img {
+        width: 35px;
+    }
+   
+
+    
+    
 }
 
 @media (max-width: 750px) {
@@ -262,10 +326,17 @@ li {
         display: flex;
         position: relative;
         width: 50%;
-        
-        
     
     }
+
+    .profile img {
+        width: 40px;
+    }
+    .navbar-search img {
+        width: 35px;
+    }
+
+    
     
     
 }
@@ -273,20 +344,15 @@ li {
 @media (max-width: 550px) {
     .searcher img {
         width: 30px;
-        background: tomato;
+        background: #d90429;
         padding: 5px;
         border-radius: 4px;
         color: white;
         position: absolute;
         left: 82%;
         top: 20%;
-        
-       
-        
     }
 
-   
-    
 
     .logo {
         display: none;
@@ -294,5 +360,12 @@ li {
 
     .mobile-logo {
         display: block;
+    }
+
+    .profile img {
+        width: 35px;
+    }
+    .navbar-search img {
+        width: 35px;
     }
 }

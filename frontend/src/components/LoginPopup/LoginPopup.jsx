@@ -13,8 +13,8 @@ export const LoginPopup = ({ setShowLogin }) => {
 
     const [currentState, setCurrentState] = useState("Iniciar Sesion")
     const { url, setToken } = useContext(StoreContext)
-    const [userName, setUsername] = useState(null)
-
+    const [checkbox, setCheckbox] = useState(false)
+    
     const [data, setData] = useState({
         name: '',
         email: '',
@@ -58,6 +58,12 @@ export const LoginPopup = ({ setShowLogin }) => {
         }
     }
 
+    
+
+    
+
+    
+
 
   return (
     <div className='login-popup'>
@@ -74,12 +80,12 @@ export const LoginPopup = ({ setShowLogin }) => {
             </div>
            
             
-            <button type='submit'>{ currentState === "Iniciar Sesion" ? "Iniciar Sesion" : "Crear Cuenta" }</button>
+            <button disabled={ checkbox === false } type='submit'>{ currentState === "Iniciar Sesion" ? "Iniciar Sesion" : "Crear Cuenta" }</button>
             
                 {
                     currentState === "Crear Cuenta" ? (
                         <div className='login-popup-condition'>
-                        <input type='checkbox' />
+                        <input onClick={() => setCheckbox(!checkbox)} type='checkbox' />
                         <p>Acepta los términos y condiciones para continuar.</p>
                         </div>
                     ) : (

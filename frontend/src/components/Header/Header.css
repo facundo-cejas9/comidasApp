@@ -1,33 +1,37 @@
 .header {
     height: 34vw;
     margin: 30px auto;
-    background: url('../../assets/header_img.png') no-repeat ;
     background-size: contain;
     position: relative;
     margin-top: 100px;
 }
 
+
+
 .header-contents {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 1.5vw;
     max-width: 50%;
-    bottom: 10%;
+    height: 50vh;
+    top: 150px;
     left: 6vw;
     animation: fadeIn 3s;
 }
 
 .header-contents h2 {
     font-weight: 500;
+    margin-bottom: 15px;
     color: white;
     font-size: max(4.5vw, 22px);
 }
 
 .header-contents p {
     font-weight: 500;
-    
+    color: white;
+    margin-bottom: 20px;
 }
 
 .header-contents button {
@@ -48,17 +52,28 @@
     transition: ease-in-out 0.2s;
 }
 
+.slider {
+    height: 100%;
+    background: #92031b;
+    z-index: 1;
+}
+
+
 @media (max-width: 1050px) {
-
-
     .header-contents {
         max-width: 45%;
+        top:90px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .header-contents {
+        max-width: 45%;
+        top:60px;
     }
 }
 
 @media (max-width: 750px) {
-   
-
     .header-contents {
         max-width: 65%;
     }
@@ -72,9 +87,19 @@
     }
 }
 
+@media (max-width: 500px) {
+    .header-contents {
+        top: 20px;
+    }
 
+    .header-contents p {
+        display: none;
+    }
 
-
+    .header-contents button {
+        padding: 2vw 4vw;
+    }
+}
 
 @keyframes fadeIn {
     0% {

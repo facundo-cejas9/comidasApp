@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 
 export const FoodItem = ({ name, price, description, image, id }) => {
-  const [itemCount, setItemCount] = useState(0);
+  
 
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);

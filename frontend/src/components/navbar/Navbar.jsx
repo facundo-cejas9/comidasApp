@@ -8,25 +8,26 @@ import { useEffect } from "react";
 
 export const Navbar = ({ setShowLogin, onSearch }) => {
   const [menu, setMenu] = useState("Inicio");
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [search, setSearch] = useState("");
-  const { getTotalCartAmount, cartItems, token, setToken, url } = useContext(StoreContext);
+  const { getTotalCartAmount, cartItems, token, setToken, url } =
+    useContext(StoreContext);
   const navbarRef = useRef();
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 80) {
-        navbarRef.current.classList.add('scrolled');
+        navbarRef.current.classList.add("scrolled");
       } else {
-        navbarRef.current.classList.remove('scrolled');
+        navbarRef.current.classList.remove("scrolled");
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -38,7 +39,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
         });
         setName(response.data.userName.name);
       } catch (error) {
-        throw new Error;
+        throw new Error();
       }
     }
   };
@@ -65,12 +66,17 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
   };
 
   return (
-    <div ref={navbarRef} className={`navbar ${location.pathname !== "/" ? "navbar-space-between" : ""}`}>
+    <div
+      ref={navbarRef}
+      className={`navbar ${
+        location.pathname !== "/" ? "navbar-space-between" : ""
+      }`}
+    >
       <Link to="/">
         <img src={assets.logo} alt="logo-image" className="logo" />
         <img className="mobile-logo" src={assets.casa} alt="logo-home" />
       </Link>
-      
+
       {location.pathname === "/" && (
         <div className="searcher">
           <input
@@ -87,39 +93,68 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
           />
         </div>
       )}
-      
+
       <div className="navbar-right">
         <div className="navbar-search">
           <Link to="/cart">
-            <img src={assets.basket_icon} alt="basket_logo" />
+            <img src={assets.cart} alt="basket_logo" />
           </Link>
           <div className={getTotalCartAmount(cartItems) === 0 ? "" : "dot"}>
             {getTotalCartAmount(cartItems) >= 1 && <p>{totalItems}</p>}
           </div>
         </div>
 
-        {!token ? (
-          <button onClick={() => setShowLogin(true)}>Iniciar Sesión</button>
-        ) : (
+        
+          
+        
           <div className="navbar-profile">
             <div className="profile">
-              <img src={assets.profile_icon} alt="Profile icon" />
-              <p>Hola, <span>{name}!</span> </p>
+              <img src={assets.profile} alt="Profile icon" />
+              
+
+                {
+                  token && (
+                   <p className="profile-name">Hola, <span>{name}</span>!</p> 
+                  ) 
+                }
+              
+           
             </div>
 
             <ul className="nav-profile-dropdown">
-              <li onClick={handleOrder}>
-                <img src={assets.bag_icon} alt="bag icon" />
+              <div className="profile-dropdown">
+              {
+                !token ? <li className="login-dropdown">
+                  <img src={ assets.login } />
+                  <span className="span-login" onClick={() => setShowLogin(true)}>Iniciar Sesión</span>
+                </li> :<p>
+                Hola, <span>{name}!</span>
+              </p>
+              
+              }
+                
+              </div>
+              <hr className="hr-dropdown" />
+              
+             {
+              token ? (
+                <>
+                
+                <li onClick={handleOrder}>
+                <img src={assets.cart} alt="bag icon" />
                 <p>Ordenes</p>
               </li>
               <hr />
               <li onClick={logout}>
-                <img src={assets.logout_icon} alt="bag icon" />
+                <img src={assets.logout} alt="bag icon" />
                 <p>Logout</p>
               </li>
+              </>
+              ) : ''
+             }
             </ul>
           </div>
-        )}
+       
       </div>
     </div>
   );
