@@ -64,6 +64,8 @@ import profile from './profile.png'
 import cart from './cart.png'
 import login from './login.png'
 import logout from './logout.png'
+import star from   './star.png'
+import burga from './burga.png'
 
 export const assets = {
     logo,
@@ -90,41 +92,43 @@ export const assets = {
     cart,
     login,
     logout,
-    food_19
+    food_19,
+    star,
+    burga
 }
 
 export const menu_list = [
     {
         menu_name: "Hamburguesas",
-        menu_image: menu_1
+        menu_image: food_4
     },
     {
         menu_name: "Pizzas",
-        menu_image: menu_2
+        menu_image: food_5
     },
     {
         menu_name: "Postres",
-        menu_image: menu_3
+        menu_image: food_9
     },
     {
         menu_name: "Sandwich",
-        menu_image: menu_4
+        menu_image: food_13
     },
     {
         menu_name: "Tortas",
-        menu_image: menu_5
+        menu_image: food_19
     },
     {
         menu_name: "Ensaladas",
-        menu_image: menu_6
+        menu_image: food_22
     },
     {
         menu_name: "Pasta",
-        menu_image: menu_7
+        menu_image: food_25
     },
     {
         menu_name: "Empanadas",
-        menu_image: menu_8
+        menu_image: food_29
     }]
 
 export const food_list = [

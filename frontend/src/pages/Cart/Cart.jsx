@@ -1,16 +1,42 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
-
-import "./Cart.css";
-
 import IconDelete from "../../assets/borrar.png";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Cart.css";
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount, url} =
-    useContext(StoreContext);
-
+  const {
+    cartItems,
+    food_list,
+    removeFromCart,
+    getTotalCartAmount,
+    url,
+    getTotalCartAmountWithDiscount,
+    haveDiscount,
+    setHaveDiscount,
+  } = useContext(StoreContext);
   const navigate = useNavigate();
+
+  const [coupon, setCoupon] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+
+  const applyCoupon = () => {
+    if (coupon === "DESC10") {
+      if (!couponApplied) {
+        setCouponApplied(true);
+        setHaveDiscount(true); // Activa el descuento en el contexto
+        toast.success("Cupón aplicado exitosamente");
+      } else {
+        toast.error("¡Ya has aplicado este cupón!");
+      }
+      setCoupon("");
+    } else {
+      toast.error("Cupón no válido");
+      setCouponApplied(false);
+    }
+  };
 
   return (
     <div className="cart">
@@ -30,7 +56,7 @@ const Cart = () => {
             return (
               <div key={index}>
                 <div className="cart-items-title cart-items-item">
-                  <img src={`${url}/images/`+item.image} />
+                  <img src={`${url}/images/` + item.image} alt={item.name} />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
@@ -38,6 +64,7 @@ const Cart = () => {
                   <img
                     onClick={() => removeFromCart(item._id)}
                     src={IconDelete}
+                    alt="Eliminar"
                   />
                 </div>
                 <hr />
@@ -57,29 +84,33 @@ const Cart = () => {
             <hr />
             <div className="cart-total-details">
               <p>Costo delivery</p>
-              <p> ${getTotalCartAmount(cartItems) === 0 ? 0 : 1000} </p>
+              <p>${getTotalCartAmount(cartItems) === 0 ? 0 : 1000}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total:</b>
               <b>
-                {" "}
-                $
                 {getTotalCartAmount(cartItems) === 0
-                  ? 0
-                  : getTotalCartAmount(cartItems) + 1000}{" "}
+                  ? "$0"
+                  : couponApplied
+                  ? `$${getTotalCartAmountWithDiscount(cartItems, haveDiscount) }`
+                  : `$${getTotalCartAmount(cartItems) + 1000}`}
               </b>
             </div>
           </div>
-
           <button onClick={() => navigate("/order")}>Pagar</button>
         </div>
         <div className="cart-promocode">
           <div>
-            <p>Si tienes un cupón de descuento, ingresalo</p>
+            <p>Si tienes un cupón de descuento, ingrésalo</p>
             <div className="cart-promocode-input">
-              <input type="text" placeholder="Tu cupón" />
-              <button>Aplicar</button>
+              <input
+                type="text"
+                placeholder="Tu cupón"
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
+              />
+              <button onClick={applyCoupon}>Aplicar</button>
             </div>
           </div>
         </div>

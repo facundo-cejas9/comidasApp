@@ -5,6 +5,7 @@ import validator from 'validator'
 
 
 
+
 //Creamos el token
 const createToken = (id) => {
     return jwt.sign({ id}, process.env.JWT_SECRET)
@@ -30,7 +31,7 @@ const loginUser = async(req, res) => {
         const token = createToken(user._id)
         const name = user.name
 
-        res.json({success: true, token, name })
+        res.json({success: true, token, name, message: `Bienvenido de vuelta ${name}`})
 
 
 
@@ -71,7 +72,7 @@ const registerUser = async(req, res) => {
     //Guardamos el usuario
     const user = await newUser.save();
     const token = createToken(user._id)
-    res.json({success: true, token})
+    res.json({success: true, token, message: 'Usuario creado correctamente'})
     } catch (error) {
         console.log(error);
         res.json({success: false, error: error})

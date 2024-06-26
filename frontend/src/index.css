@@ -26,3 +26,9 @@ a {
 .no-scroll {
   overflow: hidden;
 }
+
+@media (max-width: 500px) {
+  .slick-slide {
+    height: 250px;
+  }
+}

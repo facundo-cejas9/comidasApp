@@ -4,12 +4,13 @@ import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-  const [food_list, setFoodList] = useState([]);
 
+  const [food_list, setFoodList] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const url = "http://localhost:4000";
-
   const [token, setToken] = useState("");
+  const [discount, setDiscount] = useState(0)
+  const [haveDiscount, setHaveDiscount] = useState(false)
 
   const addToCart = async(itemId) => {
     setCartItems((prevState) => ({
@@ -46,6 +47,18 @@ const StoreContextProvider = (props) => {
     return total;
   };
 
+
+  const getTotalCartAmountWithDiscount = (cartItems, haveDiscount) => {
+    let total = getTotalCartAmount(cartItems); // Suponiendo que esta función devuelve el total del carrito
+  
+    if (haveDiscount) {
+      total += 1000; // Sumar el costo de envío al total
+      total -= total * 0.1; // Aplicar un descuento del 10% al total con envío
+    }
+  
+    return total;
+};
+
   const fetchFoodList = async () => {
     const response = await axios.get(`${url}/api/food/list`);
     if (response.data.success) {
@@ -81,6 +94,11 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    getTotalCartAmountWithDiscount, 
+    discount,
+    setDiscount,
+    haveDiscount,
+    setHaveDiscount
   };
 
   return (

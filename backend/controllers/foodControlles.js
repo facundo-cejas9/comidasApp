@@ -12,7 +12,8 @@ const addFood = async(req, res) => {
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
-        image: image_filename
+        image: image_filename,
+        stars: req.body.stars
     })
 
     try {
@@ -34,6 +35,18 @@ const listFood = async(req,res) => {
     }
 }
 
+//filtered food by name
+
+const filterFood = async(req,res) => {
+    try {
+        const regex = new RegExp(req.body.name, 'i')
+        const foods = await foodModel.find({name: {$regex: regex}})
+        res.json({success: true, data: foods})
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 //Delete food
 
 const deleteFood = async(req,res) => {
@@ -47,4 +60,4 @@ const deleteFood = async(req,res) => {
     }
 }
 
-export { addFood, listFood, deleteFood };
+export { addFood, listFood, deleteFood, filterFood };

@@ -12,7 +12,7 @@ export const ExploreMenu = ({ category, setCategory }) => {
       <div className="explore-menu-list">
         {menu_list.map((menu, index) => {
           return (
-            <div onClick={ () => setCategory(cat=> cat === menu.menu_name? 'All' : menu.menu_name ) } key={index}>
+            <div className="container-menu" onClick={ () => setCategory(cat=> cat === menu.menu_name? 'All' : menu.menu_name ) } key={index}>
               <img className={ category === menu.menu_name ? 'active' : '' } src={menu.menu_image} alt={menu.menu_name} />
               <p>{menu.menu_name}</p>
             </div>

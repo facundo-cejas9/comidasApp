@@ -23,17 +23,18 @@
 }
 
 .explore-menu-list img {
-    width: 7.5vw;
+    width: 150px;
     min-width: 80px;
+    border-radius: 20px;
+    margin-top: 5px;
     cursor: pointer;
-    border-radius: 50%;
     transition: 0.2s;
 }
 
 
 .explore-menu-list p {
     margin-top: 10px;
-    color: #747474;
+    color: #3d3d3d;
     font-size: max(1vw, 16px);
     cursor: pointer;
 }
@@ -47,13 +48,22 @@
 
 
 .explore-menu .active {
-    border: 2px solid #d90429;
+    border: 3px solid #d90429;
     padding: 1px;
+   
 }
+
+
 
 @media (max-width: 1050px) {
     .explore-menu-text {
         max-width: 100%;
         font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    .explore-menu-list img {
+        border-radius: 30%;
     }
 }

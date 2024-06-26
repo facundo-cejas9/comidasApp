@@ -18,6 +18,7 @@ export const AddFood = ({ url }) => {
     description: "",
     category: "Hamburguesas",
     price: "",
+    stars: 0,
   });
 
   const handleChange = (e) => {
@@ -40,6 +41,7 @@ export const AddFood = ({ url }) => {
     formData.append("category", data.category);
     formData.append("price", data.price);
     formData.append("image", image);
+    formData.append('stars', data.stars)
 
     const response = await axios.post(`${url}/api/food/add`, formData);
 
@@ -49,6 +51,7 @@ export const AddFood = ({ url }) => {
         description: "",
         category: "Hamburguesas",
         price: "",
+        stars: 0,
       });
       setImage(false);
       toast.success("Comida agregada con éxito!")
@@ -122,12 +125,29 @@ export const AddFood = ({ url }) => {
           <div className="add-price flex-col">
             <p> Precio</p>
             <input
+              min={0}
               onChange={handleChange}
               value={data.price}
               type="number"
               name="price"
               placeholder="Escribe acá"
               required
+            />
+          </div>
+
+          <div className="add-price flex-col">
+            <p> Rating</p>
+            <input
+              step={0.1}
+              min={0}
+              max={5}
+              onChange={handleChange}
+              value={data.stars}
+              type="number"
+              name="stars"
+              placeholder="Escribe el rating"
+              required
+              
             />
           </div>
         </div>

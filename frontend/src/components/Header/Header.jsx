@@ -1,39 +1,52 @@
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+// Importa tu archivo CSS personalizado
 import "./Header.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import Slider from "react-slick";
-
+import { assets } from "../../assets/assets";
+assets
 
 export const Header = () => {
-  const settings = {
-    dots: true,
-    lazyLoad: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: 2
-  };
-
   return (
     <div className="header">
-      <Slider className="slider" {...settings}>
-        <div className="header-contents">
-        <h2>Ordena tu comida favorita aquí</h2>
-            <p>Elige entre una gran variedad de diversas comidas</p>
+      <Swiper
+        className="slider"
+        // install Swiper modules
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        
+        
+      >
+        <SwiperSlide className="bg-slider-menu">
+         
+            <div className="header-contents">
+              <h2>Las comidas más deliciosas aquí</h2>
+              <p>Elige entre una gran variedad de restaurantes</p>
+              <a href="#explore-menu">
+                <button>Ver menú</button>
+              </a>
+            </div>
+        
+            
+         
+        </SwiperSlide>
+        <SwiperSlide className="bg-slider-offers">
+          <div className="header-contents">
+            <h2>Las comidas veganas mas ricas</h2>
+            <p>Disfruta de los platos veganos mas ricos</p>
             <a href="#explore-menu">
               <button>Ver menú</button>
             </a>
-        </div>
-        <div className="header-contents">
-        <h2>Las comidas más ricas aquí</h2>
-            <p>Elige entre una gran variedad de restaurantes</p>
-            <a href="#explore-menu">
-              <button>Ver menú</button>
-            </a>
-        </div>
-      </Slider>
+          </div>
+        </SwiperSlide>
+       
+      </Swiper>
     </div>
   );
 };

@@ -3,16 +3,18 @@ import { assets } from "../../assets/assets";
 import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 
-export const FoodItem = ({ name, price, description, image, id }) => {
-  
-
+export const FoodItem = ({ name, price, description, image, id, stars }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
 
   return (
     <div className="food-item">
       <div className="food-item-img-container">
-        <img className="food-item-img" src={`${url}/images/`+image} alt={name} />
+        <img
+          className="food-item-img"
+          src={`${url}/images/` + image}
+          alt={name}
+        />
         {!cartItems[id] ? (
           <img
             className="add"
@@ -34,7 +36,11 @@ export const FoodItem = ({ name, price, description, image, id }) => {
       <div className="food-item-info">
         <div className="food-item-rating">
           <p>{name}</p>
-          <img src={assets.rating_starts} />
+        </div>
+
+        <div className="rating">
+          <img className="star" src={assets.star} />
+          <span>{stars}</span>
         </div>
         <p className="food-item-description">{description}</p>
         <p className="food-item-price"> ${price} </p>

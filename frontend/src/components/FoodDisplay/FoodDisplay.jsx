@@ -39,6 +39,7 @@ export const FoodDisplay = ({ category, searchTerm }) => {
             description={food.description}
             price={food.price}
             image={food.image}
+            stars={ food.stars }
           />
         ))}
       </div>

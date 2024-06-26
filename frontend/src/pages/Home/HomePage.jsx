@@ -17,7 +17,7 @@ function HomePage({ searchTerm }) {
       <Header />
       <ExploreMenu category={category} setCategory={setCategory} />
       <FoodDisplay category={category} searchTerm={searchTerm} />
-      <AppDownload />
+    
     </div>
   );
 }

@@ -65,6 +65,11 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
     navigate("/myorders");
   };
 
+  const handleSearch = () => {
+    onSearch(search)
+    setSearch('')
+  }
+
   return (
     <div
       ref={navbarRef}
@@ -73,7 +78,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
       }`}
     >
       <Link to="/">
-        <img src={assets.logo} alt="logo-image" className="logo" />
+        <img onClick={() => onSearch('')} src={assets.logo} alt="logo-image" className="logo" />
         <img className="mobile-logo" src={assets.casa} alt="logo-home" />
       </Link>
 
@@ -88,7 +93,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
           <img
             src={assets.search_icon}
             alt="search-icon"
-            onClick={() => onSearch(search)}
+            onClick={handleSearch}
             className="search-icon"
           />
         </div>

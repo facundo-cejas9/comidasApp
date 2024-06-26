@@ -80,7 +80,7 @@ export const LoginPopup = ({ setShowLogin }) => {
             </div>
            
             
-            <button disabled={ checkbox === false } type='submit'>{ currentState === "Iniciar Sesion" ? "Iniciar Sesion" : "Crear Cuenta" }</button>
+            <button disabled={ currentState === "Crear Cuenta" && checkbox === false } type='submit'>{ currentState === "Iniciar Sesion" ? "Iniciar Sesion" : "Crear Cuenta" }</button>
             
                 {
                     currentState === "Crear Cuenta" ? (

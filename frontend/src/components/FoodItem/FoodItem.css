@@ -9,6 +9,7 @@
 
 .food-item-img {
     width: 100%;
+    height: 200px;
     border-radius: 15px 15px 0px 0px;
 }
 
@@ -29,9 +30,7 @@
     font-weight: 600;
 }
 
-.food-item-rating img {
-    width: 80px;
-}
+
 
 .food-item-description {
     font-size: 12px;
@@ -40,7 +39,7 @@
 }
 
 .food-item-price {
-    color: tomato;
+    color: #92031b;
     font-size: 22px;
     font-weight: 500;
     margin: 10px 0px;
@@ -73,3 +72,16 @@
     background-color: white;
 
 }
+
+.star {
+    width: 25px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+
+}
+

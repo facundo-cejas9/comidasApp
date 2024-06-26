@@ -24,8 +24,10 @@
 .header-contents h2 {
     font-weight: 500;
     margin-bottom: 15px;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: max(4.5vw, 22px);
+   
+    
 }
 
 .header-contents p {
@@ -35,8 +37,8 @@
 }
 
 .header-contents button {
-    background: white;
-    color: #747474;
+    background: rgb(226, 41, 8);
+    color: #ffffff;
     border: none;
     border-radius: 50px;
     padding: 15px 30px;
@@ -46,30 +48,79 @@
     transition: ease-in 0.3s;
 }
 
-.header-contents button:hover {
-    background: rgb(226, 41, 8);
-    color: #fff;
-    transition: ease-in-out 0.2s;
-}
 
 .slider {
     height: 100%;
-    background: #92031b;
+    /* background: #92031b; */
     z-index: 1;
 }
 
-
-@media (max-width: 1050px) {
-    .header-contents {
-        max-width: 45%;
-        top:90px;
-    }
+.bg-slider-offers {
+    background-image: url('../../assets/vegan.webp');
+    background-position: initial;
+    background-size: cover;
+    height: 100%;
+    border-radius: 20px;
 }
+
+.bg-slider-menu {
+    background-image: url('../../assets/pizza.webp');
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.bg-slider-food {
+    background: #F7971E;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFD200, #F7971E);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFD200, #F7971E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100%;
+    border-radius: 20px;
+}
+
+.bg-slider-lastoffer {
+background: #fceabb;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #f8b500, #fceabb);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #f8b500, #fceabb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+height: 100%;
+ border-radius: 20px;
+
+}
+
+.content-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+}
+
+.content-image {
+    display: flex;
+    justify-content: flex-end;
+    width: 20px;
+}
+
+
+.header-contents-img {
+    width: 100%;
+    animation: fadeIn 3s;
+}
+
+.header-contents-img img {
+    width: 100%
+}
+
+
 
 @media (max-width: 1050px) {
     .header-contents {
         max-width: 45%;
         top:60px;
+    }
+
+    .header-contents p {
+        display: none;
     }
 }
 
@@ -99,6 +150,8 @@
     .header-contents button {
         padding: 2vw 4vw;
     }
+    
+    
 }
 
 @keyframes fadeIn {
