@@ -37,15 +37,35 @@ const listFood = async(req,res) => {
 
 //filtered food by name
 
-const filterFood = async(req,res) => {
+const filterFood = async (req, res) => {
     try {
-        const regex = new RegExp(req.body.name, 'i')
-        const foods = await foodModel.find({name: {$regex: regex}})
-        res.json({success: true, data: foods})
+        const searchTerm = req.query.query;
+
+        // Verifica si se proporciona un término de búsqueda
+        if (!searchTerm) {
+            return res.status(400).json({ success: false, message: "Debe proporcionar un término de búsqueda" });
+        }
+
+        // Construye la consulta para buscar en el nombre o categoría
+        const query = {
+            $or: [
+                { name: { $regex: searchTerm, $options: 'i' } }, 
+                { category: { $regex: searchTerm, $options: 'i' } } 
+            ]
+        };
+
+        // Realiza la consulta en la base de datos
+        const foods = await foodModel.find(query);
+
+        if (foods.length === 0) {
+            return res.status(404).json({ success: true, message: "No se encontraron alimentos" });
+        }
+
+        res.json({ success: true, data: foods });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
 //Delete food
 

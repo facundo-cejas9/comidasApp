@@ -19,7 +19,7 @@ const upload = multer({storage: storage})
 foodRouter.post('/add', upload.single('image'), addFood)
 
 foodRouter.get('/list', listFood)
-foodRouter.get('/list/name', filterFood)
+foodRouter.get('/search/list', filterFood)
 
 foodRouter.post('/delete', deleteFood)
 
