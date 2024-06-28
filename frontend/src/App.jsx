@@ -8,7 +8,8 @@ import { useState } from "react";
 import { LoginPopup } from "./components/LoginPopup/LoginPopup";
 import VerifyOrder from "./pages/VerfiyOrder/VerifyOrder";
 import MyOrders from "./pages/myOrders/MyOrders";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
+import SearchPage from "./pages/Search/SearchPage";
 
 function App() {
 
@@ -31,8 +32,9 @@ function App() {
           
           <Route
             path="/"
-            element={<HomePage searchTerm={searchTerm} />}
+            element={<HomePage  />}
           />
+          <Route path='/search' element={ <SearchPage searchTerm={searchTerm} /> } />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlacerOrder />} />
           <Route path="/verify" element={ <VerifyOrder />  } />

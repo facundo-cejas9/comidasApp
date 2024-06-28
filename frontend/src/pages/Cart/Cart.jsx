@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
-import IconDelete from "../../assets/borrar.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Cart.css";
+import { assets } from "../../assets/assets";
 
 const Cart = () => {
   const {
@@ -16,6 +16,7 @@ const Cart = () => {
     getTotalCartAmountWithDiscount,
     haveDiscount,
     setHaveDiscount,
+    addToCart,
   } = useContext(StoreContext);
   const navigate = useNavigate();
 
@@ -41,33 +42,36 @@ const Cart = () => {
   return (
     <div className="cart">
       <div className="cart-items">
-        <div className="cart-items-title">
-          <p>Items</p>
-          <p>Comida</p>
-          <p>Precio</p>
-          <p>Cantidad</p>
-          <p>Total</p>
-          <p>Quitar</p>
-        </div>
-        <br />
         <hr />
         {food_list.map((item, index) => {
           if (cartItems[item._id]) {
             return (
               <div key={index}>
-                <div className="cart-items-title cart-items-item">
-                  <img src={`${url}/images/` + item.image} alt={item.name} />
-                  <p>{item.name}</p>
-                  <p>${item.price}</p>
-                  <p>{cartItems[item._id]}</p>
-                  <p>${item.price * cartItems[item._id]}</p>
-                  <img
-                    onClick={() => removeFromCart(item._id)}
-                    src={IconDelete}
-                    alt="Eliminar"
-                  />
+                <div className="container-cart">
+                  <div className="cart-container-image">
+                    <img src={`${url}/images/` + item.image} alt={item.name} />
+                  </div>
+                  <div className="cart-price">
+                    <p>{item.name}</p>
+                    <p>${item.price * cartItems[item._id]}</p>
+                  </div>
+                  <div className="cart-add">
+                    <img
+                      onClick={() => removeFromCart(item._id)}
+                      src={assets.remove_icon_red}
+                      alt="Remove item"
+                    />
+                    <p>{cartItems[item._id]}</p>
+
+                    <img
+                      onClick={() => addToCart(item._id)}
+                      src={assets.add_icon_green}
+                      alt="Add item"
+                    />
+                  </div>
+
+                  
                 </div>
-                <hr />
               </div>
             );
           }
@@ -93,7 +97,10 @@ const Cart = () => {
                 {getTotalCartAmount(cartItems) === 0
                   ? "$0"
                   : couponApplied
-                  ? `$${getTotalCartAmountWithDiscount(cartItems, haveDiscount) }`
+                  ? `$${getTotalCartAmountWithDiscount(
+                      cartItems,
+                      haveDiscount
+                    )}`
                   : `$${getTotalCartAmount(cartItems) + 1000}`}
               </b>
             </div>

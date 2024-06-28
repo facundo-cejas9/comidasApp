@@ -7,7 +7,6 @@ import { StoreContext } from "../../context/StoreContext";
 import { useEffect } from "react";
 
 export const Navbar = ({ setShowLogin, onSearch }) => {
-  const [menu, setMenu] = useState("Inicio");
   const [name, setName] = useState("");
   const [search, setSearch] = useState("");
   const { getTotalCartAmount, cartItems, token, setToken, url } =
@@ -39,7 +38,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
         });
         setName(response.data.userName.name);
       } catch (error) {
-        throw new Error();
+        console.error("Failed to fetch user name", error);
       }
     }
   };
@@ -48,7 +47,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
     getUserName();
   }, [token]);
 
-  const totalItems = Object.values(cartItems).reduce(
+  const totalItems = Object.values(cartItems || {}).reduce(
     (total, quantity) => total + quantity,
     0
   );
@@ -66,9 +65,14 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
   };
 
   const handleSearch = () => {
-    onSearch(search)
-    setSearch('')
-  }
+    onSearch(search);
+    setSearch("");
+    if (search.trim().length <= 1) {
+      return;
+    } else {
+      navigate(`/search/?q=${search}`);
+    }
+  };
 
   return (
     <div
@@ -78,11 +82,16 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
       }`}
     >
       <Link to="/">
-        <img onClick={() => onSearch('')} src={assets.logo} alt="logo-image" className="logo" />
+        <img
+          onClick={() => onSearch("")}
+          src={assets.logo}
+          alt="logo-image"
+          className="logo"
+        />
         <img className="mobile-logo" src={assets.casa} alt="logo-home" />
       </Link>
 
-      {location.pathname === "/" && (
+      {location.pathname === "/" || location.pathname === "/search/" ? (
         <div className="searcher">
           <input
             type="text"
@@ -97,7 +106,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
             className="search-icon"
           />
         </div>
-      )}
+      ) : null}
 
       <div className="navbar-right">
         <div className="navbar-search">
@@ -109,57 +118,54 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
           </div>
         </div>
 
-        
-          
-        
-          <div className="navbar-profile">
-            <div className="profile">
-              <img src={assets.profile} alt="Profile icon" />
-              
+        <div className="navbar-profile">
+          <div className="profile">
+            <img src={assets.profile} alt="Profile icon" />
 
-                {
-                  token && (
-                   <p className="profile-name">Hola, <span>{name}</span>!</p> 
-                  ) 
-                }
-              
-           
-            </div>
-
-            <ul className="nav-profile-dropdown">
-              <div className="profile-dropdown">
-              {
-                !token ? <li className="login-dropdown">
-                  <img src={ assets.login } />
-                  <span className="span-login" onClick={() => setShowLogin(true)}>Iniciar Sesión</span>
-                </li> :<p>
-                Hola, <span>{name}!</span>
+            {token && (
+              <p className="profile-name">
+                Hola, <span>{name}</span>!
               </p>
-              
-              }
-                
-              </div>
-              <hr className="hr-dropdown" />
-              
-             {
-              token ? (
-                <>
-                
-                <li onClick={handleOrder}>
-                <img src={assets.cart} alt="bag icon" />
-                <p>Ordenes</p>
-              </li>
-              <hr />
-              <li onClick={logout}>
-                <img src={assets.logout} alt="bag icon" />
-                <p>Logout</p>
-              </li>
-              </>
-              ) : ''
-             }
-            </ul>
+            )}
           </div>
-       
+
+          <ul className="nav-profile-dropdown">
+            <div className="profile-dropdown">
+              {!token ? (
+                <li className="login-dropdown">
+                  <img src={assets.login} />
+                  <span
+                    className="span-login"
+                    onClick={() => setShowLogin(true)}
+                  >
+                    Iniciar Sesión
+                  </span>
+                </li>
+              ) : (
+                <p>
+                  Hola, <span>{name}!</span>
+                </p>
+              )}
+            </div>
+            <hr className="hr-dropdown" />
+
+            {token ? (
+              <>
+                <li onClick={handleOrder}>
+                  <img src={assets.cart} alt="bag icon" />
+                  <p>Ordenes</p>
+                </li>
+                <hr />
+                <li onClick={logout}>
+                  <img src={assets.logout} alt="bag icon" />
+                  <p>Logout</p>
+                </li>
+              </>
+            ) : (
+              ""
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

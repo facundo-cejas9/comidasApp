@@ -11,25 +11,13 @@ export const FoodDisplay = ({ category, searchTerm }) => {
     const filteredByCategory = food_list.filter(
       (food) => category === "All" || category === food.category
     );
-
-    const filteredBySearch = filteredByCategory.filter(
-      (food) =>
-        searchTerm === "" ||
-        (food.name &&
-          food.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-
-    if (filteredBySearch.length > 0) {
-      setFilteredFoods(filteredBySearch);
-    } else {
-      // Si no hay resultados después del filtro de búsqueda, mostramos todos los alimentos que coinciden con la categoría
-      setFilteredFoods(filteredByCategory);
-    }
+  
+      setFilteredFoods(filteredByCategory)
   }, [category, food_list, searchTerm]);
 
   return (
     <div className="food-display" id="food-display">
-      <h2>Los más pedidos esta semana</h2>
+      <h2>Todas nuestras comidas</h2>
       <div className="food-list">
         {filteredFoods.map((food, index) => (
           <FoodItem

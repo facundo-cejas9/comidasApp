@@ -68,6 +68,11 @@ const StoreContextProvider = (props) => {
     }
   };
 
+
+ 
+
+ 
+
   const loadCartData = async(token) => {
     const response = await axios.post(url+'/api/cart/get',{}, {headers:{token}})
     setCartItems(response.data.cartData)
@@ -98,7 +103,10 @@ const StoreContextProvider = (props) => {
     discount,
     setDiscount,
     haveDiscount,
-    setHaveDiscount
+    setHaveDiscount,
+  
+
+    
   };
 
   return (
