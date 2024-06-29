@@ -66,6 +66,9 @@ import login from './login.png'
 import logout from './logout.png'
 import star from   './star.png'
 import burga from './burga.png'
+import search_error from './search-error.png'
+import deleteCart from './delete-cart.png'
+import addCart from './add-cart.png'
 
 export const assets = {
     logo,
@@ -94,7 +97,10 @@ export const assets = {
     logout,
     food_19,
     star,
-    burga
+    burga,
+    search_error,
+    deleteCart,
+    addCart
 }
 
 export const menu_list = [

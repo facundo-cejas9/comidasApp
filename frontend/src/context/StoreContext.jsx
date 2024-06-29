@@ -13,22 +13,31 @@ const StoreContextProvider = (props) => {
   const [haveDiscount, setHaveDiscount] = useState(false)
 
   const addToCart = async(itemId) => {
-    setCartItems((prevState) => ({
-      ...prevState,
-      [itemId]: (prevState[itemId] || 0) + 1,
-    }));
-
+    setCartItems((prevState) => {
+      const updatedCartItems = { ...prevState };
+      if (updatedCartItems[itemId]) {
+          updatedCartItems[itemId] += 1;
+      } else {
+          updatedCartItems[itemId] = 1;
+      }
+      return updatedCartItems;
+  });
     if (token) {
       await axios.post(url+"/api/cart/add", {itemId}, {headers: {token}})
     }
   };
 
   const removeFromCart = async(itemId) => {
-    setCartItems((prevState) => ({
-      ...prevState,
-      [itemId]: (prevState[itemId] || 0) - 1,
-    }));
-
+    setCartItems((prevState) => {
+      const updatedCartItems = { ...prevState };
+      if (updatedCartItems[itemId] > 1) {
+          updatedCartItems[itemId] -= 1;
+      } else {
+          delete updatedCartItems[itemId];
+        
+      }
+      return updatedCartItems;
+  });
     if (token) {
       await axios.post(url+"/api/cart/remove", {itemId}, {headers: {token}})
     }
@@ -69,6 +78,19 @@ const StoreContextProvider = (props) => {
   };
 
 
+  const deleteAllCartItems = async () => {
+    setCartItems({});
+    try {
+      if (token) {
+        await axios.post(url+"/api/cart/remove/all", {}, {headers: {token}})
+        toast.success("Todos los elementos del carrito han sido borrados!");
+      }
+    } catch (error) {
+      toast.error("Hubo un error al borrar los elementos del carrito.");
+    }
+  }
+
+
  
 
  
@@ -104,9 +126,10 @@ const StoreContextProvider = (props) => {
     setDiscount,
     haveDiscount,
     setHaveDiscount,
+    deleteAllCartItems
   
 
-    
+
   };
 
   return (

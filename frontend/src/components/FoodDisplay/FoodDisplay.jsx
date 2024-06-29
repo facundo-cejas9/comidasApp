@@ -15,9 +15,19 @@ export const FoodDisplay = ({ category, searchTerm }) => {
       setFilteredFoods(filteredByCategory)
   }, [category, food_list, searchTerm]);
 
+
+
+
+
   return (
     <div className="food-display" id="food-display">
-      <h2>Todas nuestras comidas</h2>
+      {
+        category === "All" ? (
+          <h2>Todas nuestras comidas</h2>
+        ) : (
+          <h2>{category}</h2>
+        )
+      }
       <div className="food-list">
         {filteredFoods.map((food, index) => (
           <FoodItem
