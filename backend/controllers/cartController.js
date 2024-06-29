@@ -30,13 +30,39 @@ const addToCart = async(req, res) => {
 const removeFromCart = async(req, res) => {
     try {
         let userData = await userModel.findById({_id: req.body.userId})
-        let cartData = await userData.cartData
-        if (cartData[req.body.itemId] > 0) {
-            cartData[req.body.itemId] -= 1;
+        let cartData = userData.cartData
+       // Disminuye la cantidad del artículo especificado si es mayor que 0
+       if (cartData[req.body.itemId] > 0) {
+        cartData[req.body.itemId] -= 1;
+
+        // Si la cantidad del artículo es 0, elimínalo del carrito
+        if (cartData[req.body.itemId] === 0) {
+            delete cartData[req.body.itemId];
         }
+    }
+
+   
+    if (Object.keys(cartData).length === 0) {
+        cartData = {};
+    }
         await userModel.findByIdAndUpdate(req.body.userId, {cartData})
         res.json({success: true, message: 'Item eliminado del carrito'})
 
+
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: 'error'})
+    }
+}
+
+
+
+//Delete all cart items
+const deleteAllcartItems = async(req, res) => {
+    try {
+        let cartData = { }
+        await userModel.findByIdAndUpdate(req.body.userId, {cartData})
+        res.json({success: true, message: 'Carrito borrado con éxito'})
 
     } catch (error) {
         console.log(error)
@@ -57,4 +83,4 @@ const getCartData = async(req,res) => {
 }
 
 
-export { addToCart, removeFromCart, getCartData}
+export { addToCart, removeFromCart, getCartData, deleteAllcartItems}
