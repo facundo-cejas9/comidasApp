@@ -15,7 +15,7 @@ const createToken = (id) => {
 
 //loginuser
 const loginUser = async(req, res) => {
-    const {email, password, name} = req.body
+    const {email, password} = req.body
     try {
         const user = await userModel.findOne({email})
 
@@ -221,5 +221,25 @@ const userEmail = async (req, res) => {
     }
  
 }
+//Obtener todos los usuarios
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find({});
+    res.json({ success: true, users });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+}
 
-export { loginUser, registerUser, dataUser, forgotPassword, resetPassword, userEmail, resetPasswordConfirm }
+//Borrar usuario
+const deleteUser = async(req,res) => {
+  try {
+      
+      await userModel.findByIdAndDelete(req.body._id)
+      res.json({success: true, message: 'Usuario Eliminado'})
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
+}
+
+export { loginUser, registerUser, dataUser, forgotPassword, resetPassword, userEmail, resetPasswordConfirm, getAllUsers, deleteUser }
