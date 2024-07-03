@@ -1,10 +1,13 @@
-import React, { useContext, useState, useRef } from "react";
-import { assets } from "../../assets/assets";
-import "./Navbar.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { StoreContext } from "../../context/StoreContext";
-import { useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
+import { assets } from "../../assets/assets";
+import axios from "axios";
+
+import "./Navbar.css";
+
+
 
 export const Navbar = ({ setShowLogin, onSearch }) => {
   const [name, setName] = useState("");
@@ -79,12 +82,11 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
     <div
       ref={navbarRef}
       className={`navbar ${
-        location.pathname !== "/" ? "navbar-space-between" : ""
+        location.pathname === "/login" || location.pathname === "/recovery" ? "navbar-start" : ""
       }`}
     >
       <Link to="/">
         <img
-          onClick={() => onSearch("")}
           src={assets.logo}
           alt="logo-image"
           className="logo"
@@ -109,7 +111,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
         </div>
       ) : null}
 
-      <div className="navbar-right">
+      <div className={ location.pathname === '/login' || location.pathname === '/recovery'  ? "disable-navbar-right" : "navbar-right" }>
         <div className="navbar-search">
           <Link to="/cart">
             <img src={assets.cart} alt="basket_logo" />
@@ -153,8 +155,8 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
             {token ? (
               <>
                 <li onClick={handleOrder}>
-                  <img src={assets.cart} alt="bag icon" />
-                  <p>Ordenes</p>
+                  <img src={assets.parcel_icon} alt="bag icon" />
+                  <p>Mis pedidos</p>
                 </li>
                 <hr />
                 <li onClick={logout}>

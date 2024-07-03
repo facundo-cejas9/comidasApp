@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Cart.css";
 import { assets } from "../../assets/assets";
+import { EmptyCart } from "../../components/EmptyCart/EmptyCart";
 
 const Cart = () => {
   const {
@@ -43,10 +44,8 @@ const Cart = () => {
 
   const handleRemoveItems = () => {
     deleteAllCartItems()
-    toast.success("Todos los productos han sido eliminados del carrito");
   };
 
-  console.log(cartItems);
 
 
   return (
@@ -54,13 +53,7 @@ const Cart = () => {
       <>
         {Object.keys(cartItems).length === 0 ? (
           <>
-            <div className="empty-cart">
-              <img src={assets.addCart} />
-              <p>Aún no tienes productos en tu carrito</p>
-              <Link to="/#explore-menu">
-                <button className="btn-empty-cart">Comenzar a comprar</button>
-              </Link>
-            </div>
+            <EmptyCart textInCart={"Aún no tienes elementos en tu carrito"} srcImg={assets.addCart} />
           </>
         ) : (
           <div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { StoreContext } from "../../context/StoreContext";
 import { useEffect } from "react";
 import { assets } from "../../assets/assets";
+import { EmptyCart } from "../../components/EmptyCart/EmptyCart";
 
 const MyOrders = () => {
   const [data, setData] = useState([]);
@@ -16,6 +17,7 @@ const MyOrders = () => {
       { headers: { token } }
     );
     setData(response.data.data);
+    console.log(response.data.data);
   };
 
   useEffect(() => {
@@ -25,35 +27,93 @@ const MyOrders = () => {
   }, [token]);
 
   return (
-    <div className="my-orders">
-      <h2>Mis Ordenes</h2>
-      <div className="container">
-        {data.map((order, index) => {
-          return (
-            <div key={index} className="my-orders-order">
-              <img src={assets.parcel_icon} alt="parcel icon" />
-              <p className="order-title">
-                {order.items.map((item, index) => {
-                  if (index === order.items.length - 1) {
-                    return `${item.name} x${item.quantity}`;
-                  } else {
-                    return `${item.name} x${item.quantity}, `;
-                  }
-                })}
-              </p>
-              <p className="order-price">${order.amount}</p>
-              <p className="order-product">Productos: {order.items.length}</p>
-              <p>
-                <span>&#x25cf;</span>
-                <b> {order.status}</b>
-              </p>
-              <button onClick={getOrders}>Seguir orden</button>
-            </div>
-          );
-        })}
+    <>
+    {data.length === 0 ? (
+      <div className="empty-page">
+        <EmptyCart textInCart={"Aún no tienes pedidos realizados."} srcImg={assets.parcel_icon} />
       </div>
-    </div>
-  );
-};
+    ) : (
+      <div className="my-orders">
+        <div className="container-order">
+          <>
+            <h2>Mis Órdenes</h2>
+            {data.map((order, index) => {
+              // Calcular el total de productos en la orden
+              let totalOrderProducts = 0;
+              order.items.forEach((item) => {
+                totalOrderProducts += item.quantity;
+              });
+  
+              return (
+                <div key={index} className="my-orders-order">
+                  <div className="order-details">
+                    <img src={assets.parcel_icon} alt="parcel icon" />
+                  </div>
+                  <div className="order">
+                    {order.items.map((item, index) => (
+                      <div key={index}>
+                        <p className="order-title">{item.name}</p>
+                        <p>
+                          Unidades: <span className="item-name">{item.quantity}</span>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p>
+                    Productos: <span className="item-name">{totalOrderProducts}</span>
+                  </p>
+                  <p>
+                    <span
+                      className={
+                        order.status === "Procesando"
+                          ? "orange"
+                          : order.status === "Entregado"
+                          ? "verde"
+                          : "rojo"
+                      }
+                    >
+                      &#x25cf;
+                    </span>
+                    <b
+                      className={
+                        order.status === "Procesando"
+                          ? "orange"
+                          : order.status === "Entregado"
+                          ? "verde"
+                          : "rojo"
+                      }
+                    >
+                      {" "}
+                      {order.status}
+                    </b>
+                  </p>
+                  <p>
+                    Total: $<span className="item-name">{order.amount}</span>
+                  </p>
+                  <button
+                    disabled={
+                      order.status === "Entregado" || order.status === "Cancelado"
+                    }
+                    onClick={getOrders}
+                  >
+                    {order.status === "Entregado"
+                      ? "Pedido Entregado"
+                      : order.status === "Cancelado"
+                      ? "Pedido Cancelado"
+                      : "Seguir orden"}
+                  </button>
+                </div>
+              );
+            })}
+          </>
+        </div>
+      </div>
+    )}
+  </>
+  
+
+  )
+
+}
 
 export default MyOrders;

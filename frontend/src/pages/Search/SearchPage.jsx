@@ -28,7 +28,7 @@ function SearchPage() {
           toast.error(response.data.message);
         }
       } catch (error) {
-        console.error("Axios error:", error);
+        console.error(error);
       }
     };
 
@@ -39,7 +39,7 @@ function SearchPage() {
   }, [q]);
 
   return (
-    <div className="container">
+    <div className="search">
       {q && foodSearch.length > 0 ? (
         <>
           <h3>Top resultados para '{q}'</h3>

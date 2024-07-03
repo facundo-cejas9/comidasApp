@@ -12,6 +12,7 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { RecoveryPage } from "./pages/recovery/RecoveryPage";
 import { StoreContext } from "./context/StoreContext";
 import { ResetPassword } from "./pages/ResetPassword/ResetPassword";
+import MyOrders from "./pages/myOrders/MyOrders";
 
 
 function App() {
@@ -32,17 +33,22 @@ function App() {
     }
   }, [setRecoveryEmail, setPasswordToken]);
 
+  const onSearch = () => {
+    setSearchTerm(searchTerm);
+  }
+
   return (
     <>
       <div className="app">
         <ToastContainer />
-        <Navbar setShowLogin={setShowLogin} />
+        <Navbar setShowLogin={setShowLogin} onSearch={onSearch} />
         <Routes>
           <Route path="/login" element={<LoginPage setShowLogin={setShowLogin} />} />
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage  />}  />
           <Route path="/search" element={<SearchPage searchTerm={searchTerm} />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlacerOrder />} />
+          <Route path="/myorders" element={<MyOrders />} />
           <Route path="/recoverypassword/:id/:token" element={<ResetPassword />} />
           {recoveryEmail && <Route path="/recovery" element={<RecoveryPage />} />}
           <Route path="*" element={<ErrorPage />} />
