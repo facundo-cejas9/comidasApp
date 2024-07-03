@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import validator from 'validator'
+import nodemailer from 'nodemailer'
 
 
 
@@ -81,6 +82,82 @@ const registerUser = async(req, res) => {
 
 }
 
+//Forgotpassword 
+
+
+const forgotPassword =  async(req, res) => {
+    const { email } = req.body
+    
+
+    try {
+        const existingAccount = await userModel.findOne({ email })
+        if (!existingAccount) return res.json({ success: false, message: "El usuario no existe"})
+
+        const secret = process.env.JWT_SECRET + existingAccount.password
+        const token = jwt.sign({email: existingAccount.email, id: existingAccount._id}, secret )
+        const link = `http://localhost:4000/api/user/login/recoverypassword/${existingAccount._id}/${token}`
+        console.log(link);
+    
+        res.json({success: true, message: "Enviando Email al usuario", email, token})
+    
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, error: error})
+    }
+}
+
+const resetPassword = async(req, res) => {
+ const { id, token } = req.params
+ console.log(req.params);
+
+ const existingAccount = await userModel.findOne({_id: id})
+ if (!existingAccount) return res.json({ success: false, message: "No se encontro el usuario"})
+    const secret = process.env.JWT_SECRET + existingAccount.password
+
+ try {
+    const verify = jwt.verify(token, secret)
+    if (!verify) return res.json({ success: false, message: "Token inválido"})
+    res.json({ success: true, message: "verifie"})
+  
+   
+ } catch (error) {
+    res.json({ success: false, message: "XD" })
+ }
+}
+
+const resetPasswordConfirm = async (req, res) => {
+    const { id, token } = req.params;
+    const { password } = req.body;
+  
+    try {
+      // Buscar el usuario por su ID
+      const existingAccount = await userModel.findOne({ _id: id });
+      if (!existingAccount) {
+        return res.status(404).json({ success: false, message: "No se encontró el usuario" });
+      }
+  
+      // Construir el secreto para verificar el token
+      const secret = process.env.JWT_SECRET + existingAccount.password;
+  
+      // Verificar el token
+      const decodedToken = jwt.verify(token, secret);
+      if (!decodedToken) {
+        return res.status(400).json({ success: false, message: "Token inválido" });
+      }
+  
+      // Hash de la nueva contraseña
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Actualizar la contraseña del usuario en la base de datos
+      await userModel.updateOne({ _id: id }, { password: hashedPassword });
+  
+      res.status(200).json({ success: true, message: "Contraseña restablecida exitosamente" });
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ success: false, message: "Error en la verificación del usuario" });
+    }
+  };
+
 
 const dataUser = async (req,res) => {
     const userId = req.body.userId;
@@ -92,4 +169,20 @@ const dataUser = async (req,res) => {
     }
 }
 
-export { loginUser, registerUser, dataUser }
+const userEmail = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await userModel.findOne({email});
+        if (!user) {
+            return res.json({success: false, message: 'El usuario no se encuentra registrado'})
+        }
+        res.json({success: true, email: user.email, message: 'El email está disponible'})
+        console.log(user.email)
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, error: error})
+    }
+ 
+}
+
+export { loginUser, registerUser, dataUser, forgotPassword, resetPassword, userEmail, resetPasswordConfirm }
