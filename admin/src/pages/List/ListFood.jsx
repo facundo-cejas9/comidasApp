@@ -34,22 +34,22 @@ export const ListFood = ({ url }) => {
   return (
     <div className="list add flex-col">
       <p>Todas las comidas</p>
-      <div className="list-table">
+      <div className="user-table">
         <div className="list-table-format title">
-          <b>Imagen</b>
-          <b>Nombre</b>
+          <b>Foto</b>
+          <b>Comida</b>
           <b>Precio</b>
-          <b>Action</b>
+          <b>Eliminar</b>
         </div>
         {foodList.map((food, key) => {
           return (
             <div className="list-table-format" key={key}>
               <img src={`${url}/images/${food.image}`} alt={food.name} />
-              <p>{food.name}</p>
-              <p>${food.price}</p>
-              <p onClick={() => removeFood(food._id)} className="remove">
-                X
-              </p>
+              <p className="bold">{food.name}</p>
+              <p className="bold">${food.price}</p>
+              <button onClick={() => removeFood(foodList._id)} className="btn btn-danger delete-btn">
+                  Eliminar
+                </button>
             </div>
           );
         })}

@@ -11,7 +11,6 @@ export const OrdersFood = ({ url }) => {
   const getOrdersList = async () => {
     const response = await axios.get(`${url}/api/order/list`);
     if (response.data.success) {
-      console.log(response.data.data);
       setOrders(response.data.data);
     } else {
       toast.error("error");
@@ -48,17 +47,17 @@ export const OrdersFood = ({ url }) => {
                   }
                 })}
               </p>
-              <p className="order-item-name">{`${orden.address.nombre} ${orden.address.apellido}`}</p>
-              <p className="order-item-phone">{orden.address.telefono}</p>
+              <p >Nombre: <span className="order-item-name">{`${orden.address.nombre} ${orden.address.apellido}`}</span></p>
+              <p>Teléfono: <span className="order-item-name">{orden.address.telefono}</span></p>
               <div className="order-item-address">
-                <p>{orden.address.address}</p>
-                <p>{orden.address.codigo_postal}</p>
-                <p>Productos: {orden.items.length}</p>
-                <p>Precio: ${orden.amount}</p>
+                <p>Dirección: <span className="order-item-name">{orden.address.address}</span></p>
+                <p>Código postal: <span className="order-item-name">{orden.address.codigo_postal}</span></p>
+                <p>Productos: <span className="order-item-name">{orden.items.length}</span></p>
+                <p>Precio: <span className="order-item-name">${orden.amount}</span></p>
               </div>
             </div>
             <select onChange={(event) => statusHandler(event, orden._id)} value={orden.status}>
-              <option value="Enviado">Enviado</option>
+              <option value='Procesando' disabled> Procesando  </option>
               <option value="Entregado">Entregado</option>
               <option value="Cancelado">Cancelado</option>
             </select>

@@ -8,6 +8,12 @@ export const Sidebar = () => {
   return (
     <div className='sidebar'>
         <div className='sidebar-options'>
+
+        <NavLink to={'/users'} className='sidebar-option'>
+                <img src={ assets.user_icon } />
+                <p>Usuarios</p>
+            </NavLink>
+
             <NavLink to={'/add'} className='sidebar-option'>
                 <img src={ assets.add_icon } />
                 <p>Agregar items</p>
@@ -19,7 +25,7 @@ export const Sidebar = () => {
             </NavLink>
 
             <NavLink to={'/orders'} className='sidebar-option'>
-                <img src={ assets.order_icon } />
+                <img src={ assets.parcel_icon } />
                 <p>Pedidos</p>
             </NavLink>
 

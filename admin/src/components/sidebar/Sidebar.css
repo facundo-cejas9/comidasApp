@@ -4,31 +4,44 @@
     border: 1px solid #a9a9a9;
     border-top: 0;
     font-size: max(1vw, 10px);
+    background-color: #1a1a1a;
     
 }
 
 
 .sidebar-options {
     padding-top: 50px;
-    padding-left: 20%;
+    padding-left: 10%;
     display: flex;
     flex-direction: column;
     gap: 30px;
+   
+    
 }
 
 .sidebar-option {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: black;
     padding: 10px 10px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #000000;
     cursor: pointer;
+    background-color: #eaeaea;
+    border-radius: 5px;
+    width: 100%;
     
 }
 
+
+
+.sidebar img {
+    width: 30px;
+}
 .sidebar-option.active {
-    background-color: #ffd3ca;
+    background-color: #d90429;
     transition: background-color 0.3s ease;
+    color: white;
 }
 
 

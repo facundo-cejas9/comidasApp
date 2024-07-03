@@ -1,0 +1,68 @@
+.container-user-list {
+    padding: 50px;
+    background-color: #ffffff;
+    width: 80%;
+    
+  }
+
+  .container-user-list h2 {
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    padding: 8px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
+  /* Media query para estilos responsivos */
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 15px;
+    }
+  
+    .card-body {
+      padding: 15px;
+    }
+  
+    .card-title {
+      font-size: 1.1rem;
+    }
+  
+    .btn {
+      padding: 6px 15px;
+      font-size: 0.9rem;
+    }
+  }
+  
