@@ -83,32 +83,70 @@ const registerUser = async(req, res) => {
 }
 
 //Forgotpassword 
-
-
-const forgotPassword =  async(req, res) => {
-    const { email } = req.body
-    
-
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+  
     try {
-        const existingAccount = await userModel.findOne({ email })
-        if (!existingAccount) return res.json({ success: false, message: "El usuario no existe"})
-
-        const secret = process.env.JWT_SECRET + existingAccount.password
-        const token = jwt.sign({email: existingAccount.email, id: existingAccount._id}, secret )
-        const link = `http://localhost:4000/api/user/login/recoverypassword/${existingAccount._id}/${token}`
-        console.log(link);
-    
-        res.json({success: true, message: "Enviando Email al usuario", email, token})
-    
+      const existingAccount = await userModel.findOne({ email });
+      if (!existingAccount) return res.json({ success: false, message: "El usuario no existe" });
+  
+      const secret = process.env.JWT_SECRET + existingAccount.password;
+      const token = jwt.sign({ email: existingAccount.email, id: existingAccount._id }, secret);
+      const link = `http://localhost:5173/recoverypassword/${existingAccount._id}/${token}`;
+  
+      // Selecciona el transportador basado en el dominio del email
+      const transporter = email.includes('@gmail.com') ? 
+        nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_PASS,
+          },
+        }) : 
+        nodemailer.createTransport({
+          host: 'smtp.office365.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.OUTLOOK_USER,
+            pass: process.env.OUTLOOK_PASS,
+          },
+          tls: {
+            ciphers: 'SSLv3',
+          },
+        });
+  
+      let mailOptions = {
+        from: '"Aplicacion de comidas🍔" <facundo962010@hotmail.com>',
+        to: email,
+        subject: 'Recuperación de contraseña',
+        html: `
+        <h3>Recuperación de contraseña</h3>
+        <p>Hola ${existingAccount.name},</p>
+        <p>Aquí está tu <a href="${link}">enlace de recuperación de contraseña</a>.</p>
+        <p>Por favor, ignora este mensaje si no solicitaste restablecer tu contraseña.</p>
+      `,
+      };
+  
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        
+      });
+      
+  
+      res.json({ success: true, message: "Enviando Email al usuario", email, token });
+  
     } catch (error) {
-        console.log(error);
-        res.json({success: false, error: error})
+      res.json({ success: false, error: error });
     }
-}
+  }
 
+//Get
 const resetPassword = async(req, res) => {
  const { id, token } = req.params
- console.log(req.params);
+ 
 
  const existingAccount = await userModel.findOne({_id: id})
  if (!existingAccount) return res.json({ success: false, message: "No se encontro el usuario"})
@@ -124,7 +162,7 @@ const resetPassword = async(req, res) => {
     res.json({ success: false, message: "XD" })
  }
 }
-
+//Post
 const resetPasswordConfirm = async (req, res) => {
     const { id, token } = req.params;
     const { password } = req.body;
@@ -153,7 +191,6 @@ const resetPasswordConfirm = async (req, res) => {
   
       res.status(200).json({ success: true, message: "Contraseña restablecida exitosamente" });
     } catch (error) {
-      console.error(error);
       res.status(401).json({ success: false, message: "Error en la verificación del usuario" });
     }
   };
@@ -165,7 +202,7 @@ const dataUser = async (req,res) => {
         const userName = await userModel.findById(userId).select('name');
         res.json({success: true, userName: userName})
     } catch (error) {
-        console.log(error)
+        res.status(401).json({ success: false, message: "Error"})
     }
 }
 
@@ -177,9 +214,9 @@ const userEmail = async (req, res) => {
             return res.json({success: false, message: 'El usuario no se encuentra registrado'})
         }
         res.json({success: true, email: user.email, message: 'El email está disponible'})
-        console.log(user.email)
+
     } catch (error) {
-        console.log(error);
+
         res.json({success: false, error: error})
     }
  

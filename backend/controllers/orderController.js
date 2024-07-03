@@ -5,10 +5,10 @@ import { Stripe } from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
-    const fronten_url = 'http://localhost:5174';
+    const fronten_url = 'http://localhost:5173';
 
     try {
-        console.log('Req.body:', req.body);
+        
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
@@ -36,14 +36,7 @@ const placeOrder = async (req, res) => {
                 quantity: 1
             }
         ];
-
-
-
-       
-      
-
-       
-       
+              
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -93,6 +86,7 @@ const verifyOrder = async (req, res) => {
 const userOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({ userId: req.body.userId });
+        console.log(orders);
         res.json({ success: true, data: orders });
     } catch (error) {
         console.log(error);
