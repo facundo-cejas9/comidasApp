@@ -1,0 +1,212 @@
+.login-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../assets/bg-pattern.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .jose {
+    position: relative;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 30px;
+   
+  }
+  
+  .jose::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/pizza.webp'); /* Hereda la imagen de fondo del contenedor */
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: cover;
+    filter: brightness(39%);
+    -webkit-filter: brightness(39%);
+    -moz-filter: brightness(39%);/* Ajusta el valor según tus necesidades */
+    z-index: 1 /* Asegura que esté detrás del contenido */
+  }
+  
+  .jose h2 {
+    position: relative;
+    color: #ffffff;
+    font-size: 50px;
+    z-index: 1; /* Asegura que esté por encima del pseudo-elemento */
+  }
+
+
+.login-form-container { 
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+    
+}
+
+
+
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    box-shadow: 9px 1px 17px -1px rgba(0,0,0,0.75) inset;
+-webkit-box-shadow: 9px 1px 17px -1px rgba(0,0,0,0.75) inset;
+-moz-box-shadow: 9px 1px 17px -1px rgba(0,0,0,0.75) inset;
+   
+    
+}
+
+.form-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.form {
+    place-self: center;
+    min-width: 500px;
+    color: #808080;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 40px 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+    box-shadow: 1px 10px 13px -4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 10px 13px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 10px 13px -4px rgba(0,0,0,0.75);
+}
+
+.form input {
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+    height: 60px;
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form button {
+    border: none;
+    color: white;
+    background-color: #d90429;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: sans-serif;
+    width: 100%;
+    height: 60px;
+}
+
+.form button:disabled {
+    background-color: lightgray;
+}
+
+.form span {
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+    color: #d90429;
+}
+
+.login-form h2 {
+    margin-bottom: 30px;
+}
+
+.login-condition {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+
+
+@media (max-width: 1050px) {
+    .login-form-container {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .jose {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+       
+    }
+
+    .jose::before {
+        content: '';
+        width: 100%;
+        position: absolute;
+        height: 300px;
+
+        background-image: url('../../assets/pizza.webp'); /* Hereda la imagen de fondo del contenedor */
+        filter: brightness(39%);
+        -webkit-filter: brightness(39%);
+        -moz-filter: brightness(39%);/* Ajusta el valor según tus necesidades */
+        z-index: 2 /* Asegura que esté detrás del contenido */
+      }
+      
+
+    .login-form {
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+    }
+
+    .jose h2 {
+        position: absolute;
+        top: 10vh;
+        z-index: 3;
+        font-size: 20px;
+        text-align: center;
+    }
+}
+
+
+
+
+@media (max-width: 500px) {
+    .login-info {
+        height: 35vh;
+    }
+
+    .login-form {
+        top:28vh;
+    }
+
+    .form {
+        min-width: 300px;
+        width: 100%;
+    }
+
+    .form input {
+        height: 40px;
+    }
+
+    .form button {
+        height: 40px;
+    }
+}

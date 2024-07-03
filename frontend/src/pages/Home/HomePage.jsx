@@ -13,7 +13,7 @@ function HomePage({ searchTerm }) {
   
   
   return (
-    <div>
+    <div className='home-container'>
       <Header />
       <ExploreMenu category={category} setCategory={setCategory} />
       <FoodDisplay category={category} searchTerm={searchTerm} />

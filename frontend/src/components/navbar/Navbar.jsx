@@ -73,6 +73,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
       navigate(`/search/?q=${search}`);
     }
   };
+ 
 
   return (
     <div
@@ -136,7 +137,7 @@ export const Navbar = ({ setShowLogin, onSearch }) => {
                   <img src={assets.login} />
                   <span
                     className="span-login"
-                    onClick={() => setShowLogin(true)}
+                    onClick={() => navigate('/login')}
                   >
                     Iniciar Sesión
                   </span>

@@ -11,6 +11,8 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [discount, setDiscount] = useState(0)
   const [haveDiscount, setHaveDiscount] = useState(false)
+  const [recoveryEmail, setRecoveryEmail] = useState("");
+  const [passwordToken, setPasswordToken] = useState("")
 
   const addToCart = async(itemId) => {
     setCartItems((prevState) => {
@@ -126,7 +128,12 @@ const StoreContextProvider = (props) => {
     setDiscount,
     haveDiscount,
     setHaveDiscount,
-    deleteAllCartItems
+    deleteAllCartItems,
+    recoveryEmail,
+    setRecoveryEmail,
+    passwordToken,
+    setPasswordToken,
+    
   
 
 

@@ -1,9 +1,9 @@
 .header {
     height: 34vw;
-    margin: 30px auto;
     background-size: contain;
     position: relative;
-    margin-top: 100px;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 
 
@@ -132,6 +132,11 @@ height: 100%;
 }
 
 @media (max-width: 750px) {
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
     .header-contents {
         max-width: 65%;
     }
