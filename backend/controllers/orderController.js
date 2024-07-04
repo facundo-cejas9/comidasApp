@@ -5,7 +5,7 @@ import { Stripe } from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
-    const fronten_url = 'http://localhost:5173';
+    const frontend_url = 'http://localhost:5173';
 
     try {
         
@@ -42,8 +42,8 @@ const placeOrder = async (req, res) => {
             payment_method_types: ['card'],
             line_items: line_items,
             mode: 'payment',
-            success_url: `${fronten_url}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url: `${fronten_url}/verify?success=false&orderId=${newOrder._id}`,
+            success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
         });
 
         res.json({

@@ -130,7 +130,7 @@ const forgotPassword = async (req, res) => {
   
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          return console.log(error);
+          res.json({ success: false, error: error });
         }
         
       });
@@ -159,7 +159,7 @@ const resetPassword = async(req, res) => {
   
    
  } catch (error) {
-    res.json({ success: false, message: "XD" })
+    res.json({ success: false, message: "Usuario no verificado" })
  }
 }
 //Post
