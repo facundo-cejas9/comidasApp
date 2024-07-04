@@ -13,15 +13,16 @@ import { RecoveryPage } from "./pages/recovery/RecoveryPage";
 import { StoreContext } from "./context/StoreContext";
 import { ResetPassword } from "./pages/ResetPassword/ResetPassword";
 import MyOrders from "./pages/myOrders/MyOrders";
+import { VerifyOrder } from "./pages/VerfiyOrder/VerifyOrder";
 
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { recoveryEmail, setRecoveryEmail, passwordToken, setPasswordToken } = useContext(StoreContext);
+  const { recoveryEmail, setRecoveryEmail, passwordToken, setPasswordToken, token } = useContext(StoreContext);
   const location = useLocation();
 
   useEffect(() => {
+
     const storedEmail = localStorage.getItem("recoveryEmail");
     if (storedEmail) {
       setRecoveryEmail(storedEmail);
@@ -41,13 +42,14 @@ function App() {
     <>
       <div className="app">
         <ToastContainer />
-        <Navbar setShowLogin={setShowLogin} onSearch={onSearch} />
+        <Navbar onSearch={onSearch} />
         <Routes>
-          <Route path="/login" element={<LoginPage setShowLogin={setShowLogin} />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage  />}  />
           <Route path="/search" element={<SearchPage searchTerm={searchTerm} />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlacerOrder />} />
+          <Route path="/verify" element={<VerifyOrder />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/recoverypassword/:id/:token" element={<ResetPassword />} />
           {recoveryEmail && <Route path="/recovery" element={<RecoveryPage />} />}

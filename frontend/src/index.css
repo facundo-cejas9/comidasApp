@@ -25,6 +25,10 @@ a {
   overflow: hidden;
 }
 
+button {
+  cursor: pointer;
+}
+
 @media (max-width: 500px) {
   .slick-slide {
     height: 250px;

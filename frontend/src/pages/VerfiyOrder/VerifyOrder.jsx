@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 
-const VerifyOrder = () => {
+export const VerifyOrder = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const success = searchParams.get('success');
@@ -36,4 +36,3 @@ const VerifyOrder = () => {
   )
 }
 
-export default VerifyOrder

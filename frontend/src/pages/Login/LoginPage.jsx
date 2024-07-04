@@ -102,7 +102,7 @@ export const LoginPage = ({ setShowLogin }) => {
                   nameEmail={"email"}
                   namePassword="password"
                   type="text"
-                  placeholderEmail="Nombre completo"
+                  placeholderEmail="Tu email"
                   placeholderPassword={"Tu contraseña"}
                   valueEmail={formValue.email}
                   valuePassword={formValue.password}
@@ -138,10 +138,10 @@ export const LoginPage = ({ setShowLogin }) => {
               disabled={
                 currentState === "Crear Cuenta"
                   ? checkbox === false ||
-                    formValue.name.length < 5 ||
-                    formValue.email.length < 5 ||
+                    formValue.name.length < 4 ||
+                    formValue.email.length < 4 ||
                     formValue.password.length < 6
-                  : formValue.email.length < 5 || formValue.password.length < 6
+                   : formValue.email.length < 5
               }
               type="submit"
             >
@@ -149,7 +149,7 @@ export const LoginPage = ({ setShowLogin }) => {
                 ? "Iniciar Sesion"
                 : currentState === "Crear Cuenta"
                 ? "Crear Cuenta"
-                : "Recuperar contraseña"}
+                : "Recuperar Contraseña"}
             </button>
 
             {currentState === "Crear Cuenta" ? (
