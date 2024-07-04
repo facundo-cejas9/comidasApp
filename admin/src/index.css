@@ -25,3 +25,7 @@ hr {
 .app-content {
   display: flex;
 }
+
+button {
+  cursor: pointer;
+}

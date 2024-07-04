@@ -37,6 +37,10 @@
     
 }
 
+.order-data p {
+    margin-top: 10px;
+}
+
 .order-item select {
     background-color: #000000;
     width: max(10vw, 120px);

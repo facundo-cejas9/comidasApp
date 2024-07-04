@@ -12,7 +12,6 @@ export const Users = ({ url }) => {
     const response = await axios.get(`${url}/api/user/users`);
     if (response.data.success) {
       setUsersList(response.data.users);
-     
     } else {
       console.log(response.data.message);
     }
@@ -35,24 +34,35 @@ export const Users = ({ url }) => {
   }, []);
 
   return (
-    <div className="container-user-list">
-      <h2>Lista de usuarios</h2>
-      <div className="row">
-        {usersList.map(user => (
-          <div key={user._id} className="col-md-4 mb-3">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{user.name}</h5>
-                <p className="card-text">Correo: {user.email}</p>
-                <p className="card-text">Registrado: {user.createdAt}</p>
-                <button onClick={() => removeUser(user._id)} className="btn btn-danger delete-btn">
-                  Eliminar
-                </button>
+    <>
+      {usersList.length === 0 ? (
+        <div className="container-user-list" role="alert">
+          <h2>No hay usuarios registrados</h2>
+        </div>
+      ) : (
+        <div className="container-user-list">
+          <h2>Lista de usuarios</h2>
+          <div className="row">
+            {usersList.map((user) => (
+              <div key={user._id} className="col-md-4 mb-3">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">{user.name}</h5>
+                    <p className="card-text">Correo: {user.email}</p>
+                    <p className="card-text">Registrado: {user.createdAt}</p>
+                    <button
+                      onClick={() => removeUser(user._id)}
+                      className="btn btn-danger delete-btn"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };

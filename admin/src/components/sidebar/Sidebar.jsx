@@ -9,10 +9,6 @@ export const Sidebar = () => {
     <div className='sidebar'>
         <div className='sidebar-options'>
 
-        <NavLink to={'/users'} className='sidebar-option'>
-                <img src={ assets.user_icon } />
-                <p>Usuarios</p>
-            </NavLink>
 
             <NavLink to={'/add'} className='sidebar-option'>
                 <img src={ assets.add_icon } />
@@ -27,6 +23,10 @@ export const Sidebar = () => {
             <NavLink to={'/orders'} className='sidebar-option'>
                 <img src={ assets.parcel_icon } />
                 <p>Pedidos</p>
+            </NavLink>
+        <NavLink to={'/users'} className='sidebar-option'>
+                <img src={ assets.user_icon } />
+                <p>Usuarios</p>
             </NavLink>
 
         </div>

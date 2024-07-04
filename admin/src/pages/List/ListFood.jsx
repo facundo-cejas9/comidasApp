@@ -9,24 +9,33 @@ export const ListFood = ({ url }) => {
   const [foodList, setFoodList] = useState([]);
 
   const getListFood = async () => {
-    const response = await axios.get(`${url}/api/food/list`);
-    if (response.data.success) {
-      setFoodList(response.data.data);
-    } else {
-      toast.error(response.data.message);
+    try {
+      const response = await axios.get(`${url}/api/food/list`);
+      if (response.data.success) {
+        setFoodList(response.data.data);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error al obtener la lista de comidas:", error);
+      toast.error("Error al obtener la lista de comidas");
     }
   };
-
+  
   const removeFood = async (foodId) => {
-    const response = await axios.post(`${url}/api/food/delete`, { id: foodId });
-    if (response.data.success) {
-      toast.success("Comida borrada correctamente!");
-    } else {
-      toast.error(response.data.message);
+    try {
+      const response = await axios.post(`${url}/api/food/delete`, { id: foodId });
+      if (response.data.success) {
+        toast.success("Comida borrada correctamente!");
+        await getListFood(); // Actualiza la lista después de la eliminación
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Error al eliminar la comida");
     }
-    await getListFood();
   };
-
+  
   useEffect(() => {
     getListFood();
   }, []);
@@ -47,7 +56,7 @@ export const ListFood = ({ url }) => {
               <img src={`${url}/images/${food.image}`} alt={food.name} />
               <p className="bold">{food.name}</p>
               <p className="bold">${food.price}</p>
-              <button onClick={() => removeFood(foodList._id)} className="btn btn-danger delete-btn">
+              <button onClick={() => removeFood(food._id)} className="btn btn-danger delete-btn">
                   Eliminar
                 </button>
             </div>
